@@ -24,7 +24,7 @@ export default function Esignpractice() {
 
   const save = () => {
     const signatureData = sigCanvas.current.toDataURL();
-    fetch('https://server-5pxf.onrender.com/api/signature', {
+    fetch('http://localhost:3001/api/signature', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export default function Esignpractice() {
 
   const loadSignature = () => {
     if (signatureId) {
-      fetch(`https://server-5pxf.onrender.com/api/signature/${signatureId}`)
+      fetch(`http://localhost:3001/api/signature/${signatureId}`)
         .then(response => response.json())
         .then(data => {
           console.log(data);
