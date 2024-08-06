@@ -30,7 +30,7 @@ export default function Timeschemahistory() {
   const fetchAllEntries = async () => {
     try {
       const authToken = localStorage.getItem('authToken');
-      const response = await fetch(`http://localhost:3001/api/userEntries/${teamid}`, {
+      const response = await fetch(`https://server-5pxf.onrender.com/api/userEntries/${teamid}`, {
         headers: {
           'Authorization': authToken,
         }
@@ -69,7 +69,7 @@ export default function Timeschemahistory() {
   // const fetchAllEntries = async () => {
   //   try {
   //     // Fetch all entries for the merchant's team (teamid)
-  //     const response = await fetch(`http://localhost:3001/api/userEntries/${teamid}`);
+  //     const response = await fetch(`https://server-5pxf.onrender.com/api/userEntries/${teamid}`);
   //     const data = await response.json();
 
   //     setUserEntries(data.userEntries);
