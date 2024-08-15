@@ -34,7 +34,11 @@ import Esign from './screens/userpanel/Esign';
 import Esignpractice from './screens/userpanel/Esignpractice';
 import Esignmodalpractice from './screens/userpanel/Esignmodalpractice';
 import Customersign from './screens/userpanel/Customersign';
+import WaiverSign from './screens/userpanel/WaiverSign';
 import Signature from './screens/userpanel/Signature';
+import WaiverRequest from './screens/userpanel/WaiverRequest';
+import WaiverRequestList from './screens/userpanel/WaiverRequestList';
+import WaiverSignView from './screens/userpanel/WaiverSignedView';
 import Completedocument from './screens/userpanel/Completedocument';
 // import { InvoiceProvider } from './components/InvoiceContext';
 import {
@@ -82,7 +86,11 @@ function App() {
             <Route exact path='/userpanel/E-Sign-Practice' element={<Esignpractice/>} />
             <Route exact path='/userpanel/Esignmodalpractice' element={<Esignmodalpractice/>} />
             <Route exact path='/userpanel/Signature' element={<Signature/>} />
+            <Route exact path='/userpanel/waiverrequest' element={<WaiverRequest/>} />
+            <Route exact path='/userpanel/waiverrequestlist' element={<WaiverRequestList/>} />
+            <Route exact path='/waiversignedview/' element={<WaiverSignView/>} />
             <Route exact path='/customersign' element={<Customersign/>} />
+            <Route exact path='/waiversign' element={<WaiverSign/>} />
             <Route exact path='/completedocument' element={<Completedocument/>} />
             <Route exact path='/Timeschemahistory' element={<Timeschemahistory/>} />
             <Route exact path='/Teammemberpanel/Teammenberdashboard' element={<Teammenberdashboard/>} />

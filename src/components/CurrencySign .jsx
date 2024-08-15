@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 const CurrencySign = ({}) => {
-    const [currencyType, setCurrencyType] = useState("");
+    const [currencyType, setCurrencyType] = useState("CAD");
 
 useEffect(() => {
     const storedCurrencyType = localStorage.getItem("currencyType") || "INR";

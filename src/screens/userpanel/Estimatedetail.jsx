@@ -642,6 +642,7 @@ thead{
     setContent(event.target.value);
   };
 
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const contentAsPdf = await generatePdfFromHtml();

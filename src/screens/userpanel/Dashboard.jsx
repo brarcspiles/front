@@ -67,7 +67,7 @@ export default function Dashboard() {
     try {
       const authToken = localStorage.getItem('authToken');
       const userid = localStorage.getItem("userid");
-      const response = await fetch(`https://server-5pxf.onrender.com/api/getsignupdata/${userid}`, {
+      const response = await fetch(`http://localhost:3001/api/getsignupdata/${userid}`, {
         headers: {
           'Authorization': authToken,
         }
@@ -95,7 +95,7 @@ export default function Dashboard() {
     try {
       const userid = localStorage.getItem("userid");
       const authToken = localStorage.getItem('authToken');
-      const response = await fetch(`https://server-5pxf.onrender.com/api/invoicedata/${userid}`, {
+      const response = await fetch(`http://localhost:3001/api/invoicedata/${userid}`, {
         headers: {
           'Authorization': authToken,
         }
@@ -127,7 +127,7 @@ export default function Dashboard() {
     try {
       const userid = localStorage.getItem("userid");
       const authToken = localStorage.getItem('authToken');
-      const response = await fetch(`https://server-5pxf.onrender.com/api/currentMonthReceivedAmount/${userid}`, {
+      const response = await fetch(`http://localhost:3001/api/currentMonthReceivedAmount/${userid}`, {
         headers: {
           'Authorization': authToken,
         }
@@ -154,7 +154,7 @@ export default function Dashboard() {
     try {
         const authToken = localStorage.getItem('authToken');
         const userId = localStorage.getItem('userid');
-        const response = await fetch(`https://server-5pxf.onrender.com/api/totalPaymentReceived/${userId}`, {
+        const response = await fetch(`http://localhost:3001/api/totalPaymentReceived/${userId}`, {
             headers: {
                 Authorization: authToken,
             },
@@ -178,7 +178,7 @@ export default function Dashboard() {
   //   try {
   //     const authToken = localStorage.getItem('authToken');
   //     const userid = localStorage.getItem('userid');
-  //     const response = await fetch(`https://server-5pxf.onrender.com/api/totalPaymentsReceived/${userid}`, {
+  //     const response = await fetch(`http://localhost:3001/api/totalPaymentsReceived/${userid}`, {
   //       headers: {
   //         Authorization: authToken,
   //       },
@@ -200,7 +200,7 @@ export default function Dashboard() {
     try {
       const authToken = localStorage.getItem('authToken');
       const userid = localStorage.getItem('userid');
-      const response = await fetch(`https://server-5pxf.onrender.com/api/overdueInvoices/${userid}`, {
+      const response = await fetch(`http://localhost:3001/api/overdueInvoices/${userid}`, {
         headers: { 'Authorization': authToken },
       });
       if (response.status === 401) {
