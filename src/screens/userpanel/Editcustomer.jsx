@@ -42,7 +42,7 @@ export default function Editcustomer() {
     const fetchCustomerData = async () => {
         try {
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`http://localhost:3001/api/getcustomers/${customerId}`, {
+            const response = await fetch(`https://server-5pxf.onrender.com/api/getcustomers/${customerId}`, {
                 headers: {
                   'Authorization': authToken,
                 }

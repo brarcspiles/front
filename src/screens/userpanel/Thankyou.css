@@ -1,0 +1,35 @@
+.thank-you-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f4f8;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: #333;
+}
+
+.svg-animation {
+    margin-bottom: 20px;
+}
+
+.checkmark {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: checkmark-animation 1s ease forwards;
+}
+
+@keyframes checkmark-animation {
+    0% {
+        stroke-dashoffset: 100;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+h2 {
+    font-size: 24px;
+    margin: 0;
+}

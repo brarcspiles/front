@@ -460,6 +460,7 @@ thead{
       if (response.ok) {
         console.log(updatedData, json, "Json Ok Data");
         alert('Waiver updated successfully!');
+        navigate("/waiversignthanks")
         // Optionally redirect or update the UI
       } else {
         alert('Failed to update waiver: ' + json.message);

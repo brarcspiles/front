@@ -35,6 +35,7 @@ import Esignpractice from './screens/userpanel/Esignpractice';
 import Esignmodalpractice from './screens/userpanel/Esignmodalpractice';
 import Customersign from './screens/userpanel/Customersign';
 import WaiverSign from './screens/userpanel/WaiverSign';
+import WaiverSignThanks from './screens/userpanel/WaiverSignThanks';
 import Signature from './screens/userpanel/Signature';
 import WaiverRequest from './screens/userpanel/WaiverRequest';
 import WaiverRequestList from './screens/userpanel/WaiverRequestList';
@@ -91,6 +92,7 @@ function App() {
             <Route exact path='/waiversignedview/' element={<WaiverSignView/>} />
             <Route exact path='/customersign' element={<Customersign/>} />
             <Route exact path='/waiversign' element={<WaiverSign/>} />
+            <Route exact path='/waiversignthanks' element={<WaiverSignThanks/>} />
             <Route exact path='/completedocument' element={<Completedocument/>} />
             <Route exact path='/Timeschemahistory' element={<Timeschemahistory/>} />
             <Route exact path='/Teammemberpanel/Teammenberdashboard' element={<Teammenberdashboard/>} />
