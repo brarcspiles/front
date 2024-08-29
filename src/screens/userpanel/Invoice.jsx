@@ -18,7 +18,7 @@ export default function Invoice() {
   const [currentPage, setCurrentPage] = useState(0);
   const [alertMessage, setAlertMessage] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
-  const entriesPerPage = 10;
+  const entriesPerPage = 30;
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -333,6 +333,7 @@ export default function Invoice() {
                     </table>
                   </div>
                   <div className='row mt-3'>
+                    <small className='text-danger pb-2'>Max 30 Entries show per page </small>
                     <div className='col-12'>
                       <button onClick={handlePrevPage} className='me-2' disabled={currentPage === 0}>
                         Previous Page

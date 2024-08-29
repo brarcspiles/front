@@ -67,7 +67,6 @@ const WaiverSignView = () => {
 
 
 
-
   const handlePrintContent = async () => {
     const content = document.getElementById('invoiceContent').innerHTML;
     const printWindow = window.open('', '_blank');
@@ -75,313 +74,121 @@ const WaiverSignView = () => {
     printWindow.document.write(`
     <html>
       <head>
-        <title>Print Estimate</title>
+        <title>Print Waiver</title>
         <style>
-      
-        .print-page{
-          // width:80%;
-          margin:auto
-        }
-        .adminborder{
-        
-          
-          width:100%;
-        }
-        .row{
-  
-          width:100% !important;
-          margin:auto;
-        }
-      .pt-30{
-        padding-top:30px;
-      }
-      .pb-30{
-        padding-bottom:30px;
-      }
-      .pb-90{
-        padding-bottom: 66px;
-        padding-top: 15px;
-        padding-left: 10px;
-        margin-top: 20px;
-        margin-bottom: 30px;
-      }
-
-      .padding-20{
-        padding-top:15px;
-        padding-bottom:45px;
-      }
-        .col-6{
-          width:50%;
-          float:left
-        }
-        .col-md-6{
-          width:50%;
-          float:left
-        }
-        p, h1,h2,h3,h4,h5,h6 {
-          margin:0
-        }
-        .clear{
-          clear:both;
-        }
-
-        .invoice-contentcol-6{
-          width:25% !important;
-          float:left
-        }
-
-        .invoice-contentcol-2{
-          width:25% !important;
-          float:left;
-        }
-        
-        .fw-bold{
-          font-weight:bold;
-        }
-
-        .invoice-contentcol-12{
-          width:100%;
-        }
-
-        .printcol-8{
-          width:50%;
-          float:left;
-          text-align:right
-        }
-        .invoice-contentcol-8{
-          width:50% !important;
-          float:left;
-          text-align:center;
-        }
-
-        .logoimage{
-          width:50%;
-        }
-
-        .detailbg{
-          background-color: #f0f3f4 !important;
-        }
-
-        .offset-8{
-          width:25%;
-        }
-
-        .txt-center{
-          text-align:left !important;
-          }
-
-        .text-left{
-          text-align:left;
-        }
-
-        .text-right{
-          text-align:right;
-        }
-
-        .right{
-          text-align:right;
-        }
-
-        .padding{
-          padding:20px
-        }
-
-        .flex{
-          display: flex;
-          justify-content: end;
-        }
-
-        .m-right{
-          margin-right:100px;
-        }
-        
-        /* Adjustments for better PDF rendering */
-        body {
-          font-size: 14px;
-        }
-        .invoice-content {
-          page-break-inside: avoid;
-        }
-        .page-not-break {
-          page-break-before: auto;
-          page-break-after: auto;
-          page-break-inside: avoid;
-          reak-before: auto;
-          break-after: auto;
-          break-inside: avoid;
-        }
-        .invoice-price .invoice-price-right {
-          width: 30%;
-          background: #f0f3f4;
-          color: black;
-          border: 2px solid #f0f3f4;
-          font-size: 28px;
-          text-align: right;
-          vertical-align: bottom;
-          font-weight: 300;
-          position: relative;
-          right: 38px;
-          padding: 28px 12px 16px;
-        }
-        .invoice-price .invoice-price-right span {
-          display: block;
-          font-weight: 400;
-        }
-        .invoice-price .invoice-price-right small {
-          display: block;
-          opacity: .7;
-          position: absolute;
-          top: 10px;
-          left: 12px;
-          font-size: 18px;
-        }
-        
-        @media only screen and (max-width: 575.98px) {
-              .invoice-price .invoice-price-right {
-                  right: 18px;
-              }
-        
-              .invoice-price-right{
-                width: 290px !important;
-                display: block !important;
-              }
-          }
-        .invoice-price {
-          /* background: #f0f3f4; */
-          display: table;
-          width: 100%;
-        }
-        .invoice-price .invoice-price-left, .invoice-price .invoice-price-right {
-          display: table-cell;
-          font-size: 20px;
-          font-weight: 600;
-          width: 70%;
-          position: relative;
-          vertical-align: middle;
-        }
-        .print {
-          margin-top: 10px;
-            max-width: 28cm;
-            zoom: 0.8;
-            box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.2);
-            margin-right: auto;
-            margin-left: auto;
-            background: white !important;
-            flex-direction: row; justify-content: space-between; margin-bottom: 10px;
-        }
-        .invoice-header {
-          background: #f0f3f4;
-          padding: 25px 50px;
-        }
-        @media print {
+          /* Global Styles */
           body {
-            -webkit-print-color-adjust: exact;
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
           }
-          .invoice-header {
-            background: #f0f3f4;
-            padding: 25px 50px;
+          h2, h3 {
+            color: #004085;
+            margin-bottom: 10px;
           }
-          @page {
-            /* Hide header and footer */
-            margin: 0;
+          p {
+            margin: 0 0 10px;
           }
-          @page :first {
-            /* Hide header on first page */
-            header {
-              display: none;
+          .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+          }
+
+          /* Header and Footer Styles */
+          .header, .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #e9ecef;
+          }
+          .footer {
+            border-top: 2px solid #e9ecef;
+            margin-top: 30px;
+            font-size: 12px;
+          }
+
+          /* Content Styles */
+          .content {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-bottom: 30px;
+          }
+          .content img {
+            max-width: 150px;
+            margin-bottom: 15px;
+          }
+
+          /* Table Styles */
+          .table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+          }
+          .table th, .table td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+          }
+          .table th {
+            background-color: #f1f3f5;
+            font-weight: bold;
+          }
+
+          /* Signature Section */
+          .signature-section {
+            margin-top: 30px;
+          }
+          .signature-section img {
+            max-width: 200px;
+            margin-bottom: 10px;
+          }
+
+          /* Print-specific Styles */
+          @media print {
+            body {
+              -webkit-print-color-adjust: exact;
+            }
+            .header, .footer {
+              page-break-before: always;
+              background-color: #f8f9fa !important;
+            }
+            .page-break {
+              page-break-before: always;
             }
           }
-          @page {
-            /* Hide footer on all pages */
-            footer {
-              display: none;
-            }
-          }
-}
-        .invoice-body {
-          background: #fff;
-          padding: 30px 50px;
-        }
-        .invoice-to {
-          // padding-right: 20px;
-        }
-        .invoice-date {
-          /* text-align: right; */
-          // padding-left: 15px;
-        }
-        .table{
-          width: 100%;
-    margin-bottom: 1rem;
-    color: #212529;
-    vertical-align: top;
-    border-color: #dee2e6;
-        }
-        .table>thead {
-    vertical-align: bottom;
-        border-color: inherit;
-    border-style: solid;
-    border-width: 0;
-}
-
-.col-12 {
-  width: 100%;
-}
-thead{
-  text-align:left;
-}
-
-.center{
-  text-align:center;
-}
-
-.text-end {
-  text-align: right;
-}
-        .invoice-table{
-          padding: 20px 38px 10px;
-        }
-        .text-md-end {
-          text-align: right;
-        }
-        .clr {
-          clear: both;
-        }
-
-        .margin-top-sign{
-          margin-top:20px
-        }
-        .col-md-6{
-          width:50%;
-          float: left;
-        }
-        .row {
-    --bs-gutter-x: 1.5rem;
-    --bs-gutter-y: 0;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: calc(-1* var(--bs-gutter-y));
-    margin-right: calc(-.5* var(--bs-gutter-x));
-    margin-left: calc(-.5* var(--bs-gutter-x));
-}
-        
-        .invoice-content {
-          padding: 00px 38px 10px;
-        }
-
-
         </style>
       </head>
       <body>
-        <div className="print-page">
-          ${content}
+        <div class="header">
+          <h2>Canadian Screw Piles & Contracting Ltd.</h2>
+          <p>Waiver Document</p>
+        </div>
+        <div class="container">
+          <div class="content">
+            ${content}
+          </div>
+          <div class="signature-section">
+            <p>Signature:</p>
+            <img src="${waiversign}" alt="Signature" />
+            <p>Date: ${date}</p>
+          </div>
+        </div>
+        <div class="footer">
+          <p>&copy; ${new Date().getFullYear()} Canadian Screw Piles & Contracting Ltd. All rights reserved.</p>
         </div>
       </body>
     </html>
-  `);
+    `);
     printWindow.document.close();
     await timeout(1000);
     printWindow.print();
   };
+
   
   function timeout(delay) {
     return new Promise(res => setTimeout(res, delay));
@@ -564,7 +371,7 @@ thead{
 
                 <div className="row py-4 px-2">
                   <div className="col-12 col-sm-12 col-md-12 col-lg-12" id="">
-                    <div className='print' id='invoiceContent'>
+                    <div className='print'>
                       <div className="invoice-body">
                         <div className='row'>
                           <div className='col-sm-12 col-md-12 mb-3 mb-md-0 pt-3'>
@@ -577,6 +384,7 @@ thead{
                         </div>
                         <div className="clr"></div>
                       </div>
+                      <div id='invoiceContent'>
                       <div className='invoice-header1' style={{padding:"25px 50px"}}>
                         <div className="row g-3 align-items-center">
                         <div class="mb-3">
@@ -600,6 +408,13 @@ thead{
                           
                         </div>
                         <hr />
+                       
+                        <div className="clr"></div>
+                      </div>
+                      </div>
+                     
+                      <div className='invoice-table'>
+                        <div className='content'>
                         <div className="row g-3 align-items-center">
                           <div class="mb-3">
                           <img src={waiversign} alt="Signature" className="img-fluid" />
@@ -619,9 +434,8 @@ thead{
                           Date: {date}
                           </div>
                         </div>
-                        <div className="clr"></div>
+                        </div>
                       </div>
-                     
 
                       <div className='invoice-price page-not-break'>
                         <div className='invoice-price-left text-end'>

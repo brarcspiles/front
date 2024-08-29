@@ -343,53 +343,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="row">
-                <div className='col-12 col-sm-4 col-md-4 col-lg-4'>
-                  <div className='box1 rounded adminborder py-4 px-4 m-2 '>
-                    <p className='fs-6 fw-bold'>TOTAL PAYMENTS RECEIVED</p>
-                    <p className='fs-3 fw-bold'><CurrencySign />{roundOff(totalInvoiceAmount)}</p>
-                    <div className='d-flex'>
-                      <p className='pe-3'><span className='text-primary'>Paid</span> <CurrencySign />{roundOff(totalPaymentsReceived)}</p>
-                      <p><span className='text-warning'>Unpaid</span> <CurrencySign />{roundOff(totalUnpaidAmount)}</p>  
-                    </div>
-                    <div className='d-flex'>
-                      <p className='pe-3'><span className='text-danger'>Overdue </span>{overdueCount} <span className='pointer' onClick={handleOverdue}>Invoices</span></p>
-                      {/* <p><span className='text-warning'>Unpaid</span> <CurrencySign />{roundOff(curMonUnpaidAmount)}</p>   */}
-                    </div>
-                  </div>
-                </div>
-                <div className='col-12 col-sm-4 col-md-4 col-lg-4'>
-                  <div className='box1 rounded adminborder py-4 px-4 m-2'>
-                    <p className='fs-6 fw-bold'>{currentMonth.toUpperCase()} INVOICE AMOUNT</p>
-                    <p className='fs-3 fw-bold'><CurrencySign /> {roundOff(curMonTotalAmount)}</p>
-                    <div className='d-flex'>
-                      <p className='pe-3'><span className='text-primary'>Paid</span> <CurrencySign />{roundOff(curMonPaidAmount)}</p>
-                      <p><span className='text-warning'>Unpaid</span> <CurrencySign />{roundOff(curMonUnpaidAmount)}</p>  
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* <div className="row">
-            <div className='col-12 col-sm-8 col-md-8 col-lg-8'>
-              <div className='box1 fw-bold rounded adminborder py-4 px-3 m-2'>
-                <div className="row">
-                  <div className="col-3 greyclr">
-                    <p>INVOICE</p>
-                  </div>
-                  <div className="col-3 greyclr">
-                    <p>STATUS</p>
-                  </div>
-                  <div className="col-3 greyclr">
-                    <p>DATE</p>
-                  </div>
-                  <div className="col-3 greyclr">
-                    <p>AMOUNT</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
+              
           
           <div className=''>
             {alertMessage && <Alertauthtoken message={alertMessage} onClose={() => setAlertMessage('')} />}
@@ -502,6 +456,36 @@ export default function Dashboard() {
                 </button>
               </div>
             </div>
+
+            
+              </div>
+              <div className=''>
+              <div className="row">
+                <div className='col-12 col-sm-4 col-md-4 col-lg-4'>
+                  <div className='box1 rounded adminborder py-4 px-4 m-2 '>
+                    <p className='fs-6 fw-bold'>TOTAL PAYMENTS RECEIVED</p>
+                    <p className='fs-3 fw-bold'><CurrencySign />{roundOff(totalInvoiceAmount)}</p>
+                    <div className='d-flex'>
+                      <p className='pe-3'><span className='text-primary'>Paid</span> <CurrencySign />{roundOff(totalPaymentsReceived)}</p>
+                      <p><span className='text-warning'>Unpaid</span> <CurrencySign />{roundOff(totalUnpaidAmount)}</p>  
+                    </div>
+                    <div className='d-flex'>
+                      <p className='pe-3'><span className='text-danger'>Overdue </span>{overdueCount} <span className='pointer' onClick={handleOverdue}>Invoices</span></p>
+                      {/* <p><span className='text-warning'>Unpaid</span> <CurrencySign />{roundOff(curMonUnpaidAmount)}</p>   */}
+                    </div>
+                  </div>
+                </div>
+                <div className='col-12 col-sm-4 col-md-4 col-lg-4'>
+                  <div className='box1 rounded adminborder py-4 px-4 m-2'>
+                    <p className='fs-6 fw-bold'>{currentMonth.toUpperCase()} INVOICE AMOUNT</p>
+                    <p className='fs-3 fw-bold'><CurrencySign /> {roundOff(curMonTotalAmount)}</p>
+                    <div className='d-flex'>
+                      <p className='pe-3'><span className='text-primary'>Paid</span> <CurrencySign />{roundOff(curMonPaidAmount)}</p>
+                      <p><span className='text-warning'>Unpaid</span> <CurrencySign />{roundOff(curMonUnpaidAmount)}</p>  
+                    </div>
+                  </div>
+                </div>
+              </div>
               </div>
 
 

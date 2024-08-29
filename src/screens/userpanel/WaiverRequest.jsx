@@ -105,14 +105,7 @@ export default function WaiverRequest() {
                                 
                                 <div className='col-lg-6'>
                                         <div className='mb-3'>
-                                        {showEmailAlert && (
-                            <div className="alert alert-success row" role="alert">
-                              <div className="col-11">
-                                <p className='mb-0'>Email sent successfully!</p>
-                              </div>
-                              <button type="button" className="btn-close" aria-label="Close" onClick={handleAlertClose}></button>
-                            </div>
-                          )} 
+                                        
                                             <label htmlFor='startDate' className='form-label'>
                                                 Enter Email Address
                                             </label>
@@ -125,6 +118,19 @@ export default function WaiverRequest() {
                                                 value={waiverEmail}
                                                 onChange={(e) => setwaiverEmail(e.target.value)}
                                             />
+
+
+                                        </div>
+
+                                        <div className='notification mt-4'>
+                                        {showEmailAlert && (
+                            <div className="alert alert-success row" role="alert">
+                              <div className="col-11">
+                                <p className='mb-0'>Email sent successfully!</p>
+                              </div>
+                              <button type="button" className="btn-close" aria-label="Close" onClick={handleAlertClose}></button>
+                            </div>
+                          )}
                                         </div>
                                     </div>
                                     <div className='col-lg-2'>
