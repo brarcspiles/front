@@ -12,7 +12,7 @@ export default function Dashboard() {
   const invoiceid = location.state?.invoiceid;
   const [transactions, setTransactions] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const entriesPerPage = 10;
+  const entriesPerPage = 500;
   const [curMonTotalAmount, setCurMonTotalAmount] = useState(0);
   const [curMonPaidAmount, setCurMonPaidAmount] = useState(0);
   const [curMonUnpaidAmount, setCurMonUnpaidAmount] = useState(0);
@@ -42,6 +42,7 @@ export default function Dashboard() {
   const [alertMessage, setAlertMessage] = useState('');
   const [userEntries, setUserEntries] = useState([]);
   const currentDate = new Date(); // Get the current date
+  const [searchQuery, setSearchQuery] = useState('');
 
   const currentMonth = format(currentDate, 'MMMM');
 
@@ -57,11 +58,19 @@ export default function Dashboard() {
     navigate('/userpanel/Createestimate');
   }
   const getFilteredInvoices = () => {
-    if (filterStatus === 'All') {
-      return invoices;
+    let filtered = invoices;
+    if (filterStatus !== 'All') {
+      filtered = filtered.filter(invoice => invoice.status === filterStatus);
     }
-    return invoices.filter(invoice => invoice.status === filterStatus);
+    if (searchQuery) {
+      filtered = filtered.filter(invoice =>
+        (invoice.customername?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (invoice.job?.toLowerCase() || '').includes(searchQuery.toLowerCase())
+      );
+    }
+    return filtered;
   };
+
 
   const fetchsignupdata = async () => {
     try {
@@ -367,9 +376,11 @@ export default function Dashboard() {
                 <thead>
                   <tr>
                     <th scope='col'>INVOICE</th>
+                    <th scope='col'>NAME</th>
+                    <th scope='col'>JOB</th>
                     <th scope='col'>STATUS</th>
                     {/* <th scope='col'>Status</th> */}
-                    <th scope='col'>DATE</th>
+                    {/* <th scope='col'>DATE</th> */}
                     {/* <th scope='col'>EMAIL STATUS</th> */}
                     <th scope='col'>VIEW</th>
                     <th scope='col'>AMOUNT</th>
@@ -379,13 +390,15 @@ export default function Dashboard() {
                   {getCurrentPageInvoices().map((invoice, index) => (
                     <tr key={index}>
                       <td>
-                        <p className='my-0 fw-bold clrtrxtstatus'>{invoice.customername}</p>
                         <p className='my-0'>{invoice.InvoiceNumber}</p>
-                        <p className='my-0'>Job: {invoice.job}</p>
+                        
                       </td>
-                      {/* <td>
-                        <span className='clrtrxtstatus'>{getStatus(invoice)}</span>
-                      </td> */}
+                      <td>
+                      <p className='my-0 fw-bold clrtrxtstatus'>{invoice.customername}</p>
+                      </td>
+                      <td>
+                      <p className='my-0'>Job: {invoice.job}</p>
+                      </td>
                       
                         
                       <td>
@@ -417,7 +430,7 @@ export default function Dashboard() {
   )}
 </td>
                       
-                      <td>
+                      {/* <td>
                         <div className=''>
                           <div className='d-flex'>
                             <p className='issue px-1 my-1'>Issued</p>
@@ -428,10 +441,8 @@ export default function Dashboard() {
                             <p className='datetext'>{formatCustomDate(invoice.duedate)}</p>
                           </div>
                         </div>
-                      </td>
-                      {/* <td className='text-center'>
-                        <p className='datetext'>{invoice.emailsent}</p>
                       </td> */}
+
                       <td className='text-center'>
                         <a role='button' className='text-black text-center' onClick={() => handleViewClick(invoice)}>
                           <i className='fa-solid fa-eye'></i>

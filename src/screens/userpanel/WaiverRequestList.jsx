@@ -75,6 +75,8 @@ const WaiverRequestList = () => {
           alert('Waiver deleted successfully');
           // Optionally, refresh the list of waivers here
           // For example, you could call a function to fetch the updated list
+          // Update the waivers list by removing the deleted item
+        setWaivers(prevWaivers => prevWaivers.filter(waiver => waiver._id !== id));
         } else {
           alert('Failed to delete waiver');
         }

@@ -18,7 +18,7 @@ export default function Invoice() {
   const [currentPage, setCurrentPage] = useState(0);
   const [alertMessage, setAlertMessage] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
-  const entriesPerPage = 30;
+  const entriesPerPage = 500;
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -256,9 +256,11 @@ export default function Invoice() {
                       <thead>
                         <tr>
                           <th scope='col'>INVOICE</th>
+                          <th scope='col'>NAME</th>
+                          <th scope='col'>JOB</th>
                           <th scope='col'>STATUS</th>
                           {/* <th scope='col'>Status</th> */}
-                          <th scope='col'>DATE</th>
+                          {/* <th scope='col'>DATE</th> */}
                           {/* <th scope='col'>EMAIL STATUS</th> */}
                           <th scope='col'>VIEW</th>
                           <th scope='col'>AMOUNT</th>
@@ -268,13 +270,16 @@ export default function Invoice() {
                         {getCurrentPageInvoices().map((invoice, index) => (
                           <tr key={index}>
                             <td>
-                              <p className='my-0 fw-bold clrtrxtstatus'>{invoice.customername}</p>
                               <p className='my-0'>{invoice.InvoiceNumber}</p>
+
+                            </td>
+                            <td>
+                              <p className='my-0 fw-bold clrtrxtstatus'>{invoice.customername}</p>
+                            </td>
+                            <td>
                               <p className='my-0'>Job: {invoice.job}</p>
                             </td>
-                            {/* <td>
-                        <span className='clrtrxtstatus'>{getStatus(invoice)}</span>
-                      </td> */}
+
 
 
                             <td>
@@ -306,7 +311,7 @@ export default function Invoice() {
                               )}
                             </td>
 
-                            <td>
+                            {/* <td>
                               <div className=''>
                                 <div className='d-flex'>
                                   <p className='issue px-1 my-1'>Issued</p>
@@ -317,7 +322,7 @@ export default function Invoice() {
                                   <p className='datetext'>{formatCustomDate(invoice.duedate)}</p>
                                 </div>
                               </div>
-                            </td>
+                            </td> */}
                             {/* <td className='text-center'>
                         <p className='datetext'>{invoice.emailsent}</p>
                       </td> */}
@@ -333,7 +338,7 @@ export default function Invoice() {
                     </table>
                   </div>
                   <div className='row mt-3'>
-                    <small className='text-danger pb-2'>Max 30 Entries show per page </small>
+                   
                     <div className='col-12'>
                       <button onClick={handlePrevPage} className='me-2' disabled={currentPage === 0}>
                         Previous Page
