@@ -8,7 +8,9 @@ body {
   height: 100%;
   overflow: auto;
 }
-
+table th td {
+  border: 2px solid #222;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

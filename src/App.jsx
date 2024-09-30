@@ -41,6 +41,9 @@ import WaiverRequest from './screens/userpanel/WaiverRequest';
 import WaiverRequestList from './screens/userpanel/WaiverRequestList';
 import WaiverSignView from './screens/userpanel/WaiverSignedView';
 import Completedocument from './screens/userpanel/Completedocument';
+import ConformityReport from './screens/userpanel/ConformityReport';
+import ConformityReportList from './screens/userpanel/ConformityReportList';
+import ConformityReportView from './screens/userpanel/ConformityReportView';
 // import { InvoiceProvider } from './components/InvoiceContext';
 import {
   BrowserRouter as Router,
@@ -93,6 +96,9 @@ function App() {
             <Route exact path='/customersign' element={<Customersign/>} />
             <Route exact path='/waiversign' element={<WaiverSign/>} />
             <Route exact path='/waiversignthanks' element={<WaiverSignThanks/>} />
+            <Route exact path='/conformityreport' element={<ConformityReport/>} />
+            <Route exact path='/conformityReport/:id' element={<ConformityReportView/>} />
+            <Route exact path='/conformityreportlist' element={<ConformityReportList/>} />
             <Route exact path='/completedocument' element={<Completedocument/>} />
             <Route exact path='/Timeschemahistory' element={<Timeschemahistory/>} />
             <Route exact path='/Teammemberpanel/Teammenberdashboard' element={<Teammenberdashboard/>} />
