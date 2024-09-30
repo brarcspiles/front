@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Usernavbar from './Usernavbar';
 import Usernav from './Usernav';
+import { useNavigate } from 'react-router-dom';
 import { ColorRing } from 'react-loader-spinner';
 
 const ConformityReportSubmission = () => {
@@ -12,7 +13,7 @@ const ConformityReportSubmission = () => {
     const [file, setFile] = useState('');
     const [loading, setLoading] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
+    let navigate = useNavigate();
     const [canadianScrewPiles, setCanadianScrewPiles] = useState([{
         quantity: '',
         model: '',
@@ -107,6 +108,7 @@ const ConformityReportSubmission = () => {
 
             if (response.ok) {
                 alert('Conformity Report Submitted Successfully!');
+                navigate('/conformityreportlist')
             } else {
                 alert('Failed to submit report.');
             }
@@ -177,7 +179,7 @@ const ConformityReportSubmission = () => {
                                         <div className='col-lg-4 col-md-6 col-sm-12 col-12'>
                                             <label>Date</label>
                                             <input
-                                                type='text'
+                                                type='date'
                                                 className='form-control'
                                                 value={date}
                                                 onChange={(e) => setDate(e.target.value)}
