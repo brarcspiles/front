@@ -101,7 +101,7 @@ const ConformityReportList = () => {
                                 <td>{report.clientAddress}</td>
                                 <td>{new Date(report.createdAt).toLocaleDateString()}</td>
                                 <td>
-                                    <Link to={`http://localhost:5173/conformityReport/${report._id}`} className='btn btn-primary'>
+                                    <Link to={`https://cspiles.vercel.app/conformityReport/${report._id}`} className='btn btn-primary'>
                                         View
                                     </Link>
                                 </td>
