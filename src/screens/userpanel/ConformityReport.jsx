@@ -1,14 +1,16 @@
-
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Usernavbar from './Usernavbar';
 import Usernav from './Usernav';
 import { useNavigate } from 'react-router-dom';
 import { ColorRing } from 'react-loader-spinner';
+import Select from 'react-select'; // Assuming you're using react-select
 
 const ConformityReportSubmission = () => {
-    const [clientAddress, setClientAddress] = useState('');
-    const [project, setProject] = useState('');
+    const [selectedCustomer, setSelectedCustomer] = useState(null); // Selected customer
+    const [customers, setCustomers] = useState([]); // List of customers
+    const [selectedInvoice, setSelectedInvoice] = useState(null); // Selected invoice
+    const [invoices, setInvoices] = useState([]); // List of invoices
+    const [project, setProject] = useState(''); // Project as text input
     const [date, setDate] = useState('');
     const [file, setFile] = useState('');
     const [loading, setLoading] = useState(false);
@@ -22,12 +24,93 @@ const ConformityReportSubmission = () => {
         wallThickness: '',
         helixDiameter: ''
     }]);
-
     const [bearingCapacity, setBearingCapacity] = useState([{
         modelP: '',
         load: '',
         compression: ''
     }]);
+
+    // Fetch customers when component mounts
+    useEffect(() => {
+        fetchCustomerData();
+    }, []);
+
+    // Fetch customer data
+    const fetchCustomerData = async () => {
+        try {
+            const userid = localStorage.getItem("userid");
+            const authToken = localStorage.getItem('authToken');
+            const response = await fetch(`https://server-5pxf.onrender.com/api/customers/${userid}`, {
+                headers: {
+                    'Authorization': authToken,
+                }
+            });
+
+            if (response.status === 401) {
+                const json = await response.json();
+                alert(json.message);
+                setLoading(false);
+                window.scrollTo(0, 0);
+                return;
+            } else {
+                const json = await response.json();
+                if (Array.isArray(json)) {
+                    console.log("CustomerData:-> ", json);
+                    setCustomers(json);
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching customer data:', error);
+        }
+    };
+
+    // Fetch invoices when a customer is selected
+    useEffect(() => {
+        if (selectedCustomer) {
+            fetchInvoices(selectedCustomer.email); // Assuming customer object has an 'email' field
+        }
+    }, [selectedCustomer]);
+
+    // Fetch invoice data for the selected customer
+    const fetchInvoices = async (customerEmail) => {
+        try {
+            const authToken = localStorage.getItem('authToken');
+            const response = await fetch(`https://server-5pxf.onrender.com/api/customerwisedata/${customerEmail}`, {
+                headers: {
+                    'Authorization': authToken,
+                }
+            });
+
+            if (response.status === 401) {
+                const json = await response.json();
+                alert(json.message);
+                return;
+            } else {
+                const json = await response.json();
+                if (Array.isArray(json)) {
+                    console.log("InvoiceData:-> ", json);
+                    setInvoices(json);
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching invoice data:', error);
+        }
+    };
+
+    // Handle customer selection
+    const onChangeCustomer = (selectedOption) => {
+        const customer = customers.find(c => c._id === selectedOption.value);
+        setSelectedCustomer(customer);
+        setSelectedInvoice(null); // Reset invoice selection when customer changes
+        setInvoices([]); // Clear previous invoices
+    };
+
+    // Handle invoice selection
+    const onChangeInvoice = (selectedOption) => {
+        const invoice = invoices.find(i => i.job === selectedOption.value);
+        setSelectedInvoice(invoice);
+        setProject(invoice?.job || ""); // Set project state with invoice.job
+    };
 
     // Handle input changes for Canadian Screw Piles
     const handleScrewPilesInputChange = (index, field, value) => {
@@ -82,15 +165,16 @@ const ConformityReportSubmission = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Form validation: Ensure client address is entered
-        if (!clientAddress) {
-            alert('Client address is required!');
+        // Form validation
+        if (!selectedCustomer) {
+            alert('Please select a customer!');
             return;
         }
 
         const data = {
-            clientAddress,
-            project,
+            clientAddress: selectedCustomer ? selectedCustomer.name : '', // Use customer name as clientAddress
+            email: selectedCustomer ? selectedCustomer.email : '', // Use customer name as clientAddress
+            project: selectedInvoice ? selectedInvoice.job : '', // Project remains a text input
             file,
             date,
             canadianScrewPiles,
@@ -98,6 +182,7 @@ const ConformityReportSubmission = () => {
         };
 
         try {
+            setLoading(true);
             const response = await fetch('https://server-5pxf.onrender.com/api/conformityReport', {
                 method: 'POST',
                 headers: {
@@ -108,12 +193,15 @@ const ConformityReportSubmission = () => {
 
             if (response.ok) {
                 alert('Conformity Report Submitted Successfully!');
-                navigate('/conformityreportlist')
+                navigate('/conformityreportlist');
             } else {
                 alert('Failed to submit report.');
             }
         } catch (error) {
             console.error('Error submitting form:', error);
+            alert('An error occurred while submitting the report.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -154,19 +242,37 @@ const ConformityReportSubmission = () => {
                                     </div>
                                 </div>
                                 <form onSubmit={handleSubmit}>
-                                    {/* Client Address */}
+                                    {/* Customer Selection */}
                                     <div className='form-group row mb-3'>
                                         <div className='col-lg-4 col-md-6 col-sm-12 col-12'>
-                                            <label>Client Address</label>
-                                            <input
-                                                type='text'
-                                                className='form-control'
-                                                value={clientAddress}
-                                                onChange={(e) => setClientAddress(e.target.value)}
+                                            <label>Customer</label>
+                                            <Select
+                                                value={selectedCustomer ? { value: selectedCustomer._id, label: selectedCustomer.name } : null}
+                                                onChange={onChangeCustomer}
+                                                options={customers.map(customer => ({
+                                                    value: customer._id,
+                                                    label: customer.name,
+                                                }))}
+                                                placeholder="Select a customer"
                                                 required
                                             />
                                         </div>
+                                        {/* Invoice Selection */}
                                         <div className='col-lg-4 col-md-6 col-sm-12 col-12'>
+    <label>Project</label>
+    <Select
+        value={selectedInvoice ? { value: selectedInvoice.job, label: `Job: ${selectedInvoice.job}` } : null}
+        onChange={onChangeInvoice}
+        options={invoices.map(invoice => ({
+            value: invoice.job, // Use invoice.job as the value
+            label: `Job: ${invoice.job}`, // Display job as the label
+        }))}
+        placeholder="Select an invoice"
+        isDisabled={!selectedCustomer} // Disable until a customer is selected
+    />
+</div>
+                                        {/* Project as Text Input */}
+                                        {/* <div className='col-lg-4 col-md-6 col-sm-12 col-12'>
                                             <label>Project</label>
                                             <input
                                                 type='text'
@@ -175,7 +281,7 @@ const ConformityReportSubmission = () => {
                                                 onChange={(e) => setProject(e.target.value)}
                                                 required
                                             />
-                                        </div>
+                                        </div> */}
                                         <div className='col-lg-4 col-md-6 col-sm-12 col-12'>
                                             <label>Date</label>
                                             <input
@@ -316,7 +422,7 @@ const ConformityReportSubmission = () => {
 
                                     {/* Submit Button */}
                                     <div className='mt-4'>
-                                        <button type='submit' className='btn btn-primary'>Submit Report</button>
+                                        <button type='submit' className='btn btn-primary' disabled={isButtonDisabled}>Submit Report</button>
                                     </div>
                                 </form>
                             </div>
@@ -326,7 +432,6 @@ const ConformityReportSubmission = () => {
             )}
         </div>
     );
-}
-
+};
 
 export default ConformityReportSubmission;
