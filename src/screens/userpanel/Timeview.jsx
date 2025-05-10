@@ -19,6 +19,8 @@ if(location == null || location.state == null || location.state.teamid == null)
     navigate('/userpanel/Team')
 }
 const teamid = location.state?.teamid;
+console.log(teamid,"team Id");
+
 useEffect(() => {
     if (!localStorage.getItem('authToken') || localStorage.getItem("isTeamMember") == "true") {
       navigate('/');

@@ -51,6 +51,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import TeamLocation from './screens/userpanel/TeamLocation';
 
 function App() {
   return (
@@ -92,6 +93,7 @@ function App() {
             <Route exact path='/userpanel/Signature' element={<Signature/>} />
             <Route exact path='/userpanel/waiverrequest' element={<WaiverRequest/>} />
             <Route exact path='/userpanel/waiverrequestlist' element={<WaiverRequestList/>} />
+            <Route exact path='/userpanel/TeamLocation' element={<TeamLocation/>} />
             <Route exact path='/waiversignedview/' element={<WaiverSignView/>} />
             <Route exact path='/customersign' element={<Customersign/>} />
             <Route exact path='/waiversign' element={<WaiverSign/>} />
