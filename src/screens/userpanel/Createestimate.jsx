@@ -75,16 +75,17 @@ export default function Createestimate() {
     const [alertShow, setAlertShow] = useState("");
     const [SelectedCustomerId, setSelectedCustomerId] = useState("");
     const [selectedCustomerDetails, setSelectedCustomerDetails] = useState({
-        name: '', email: ''
+        name: '', email: '', number:''
     });
     const [isCustomerSelected, setIsCustomerSelected] = useState(false);
     const [editedName, setEditedName] = useState('');
     const [editedEmail, setEditedEmail] = useState('');
+    const [editedNumber, setEditedNumber] = useState('');
     const [taxPercentage, setTaxPercentage] = useState(0);
     const [signUpData, setsignUpData] = useState(0);
     const [discountTotal, setdiscountTotal] = useState(0);
     const [estimateData, setestimateData] = useState({
-        customername: '', itemname: '', customeremail: '', estimate_id: '', EstimateNumber: '', purchaseorder: '',
+        customername: '', itemname: '', customeremail: '',customerphone:'', estimate_id: '', EstimateNumber: '', purchaseorder: '',
         job: '', date: format(new Date(), 'yyyy-MM-dd'), description: '', itemquantity: '', price: '', discount: '',
         amount: '', tax: '', discountTotal: '', taxpercentage: '', subtotal: '', total: '', amountdue: '', information: '',
     });
@@ -98,10 +99,12 @@ export default function Createestimate() {
     const [ownerId, setOwnerId] = useState('');
     const [isAddSignatureSwitchOn, setIsAddSignatureSwitchOn] = useState(false);
     const [isCustomerSignSwitchOn, setIsCustomerSignSwitchOn] = useState(false);
+const [emailOptions, setEmailOptions] = useState([]);
+const [showEmailModal, setShowEmailModal] = useState(false);
 
     const [credentials, setCredentials] = useState({
         name: '',
-        email: '',
+        emails: [''],
         number: '',
         citydata: '',
         statedata: '',
@@ -111,6 +114,22 @@ export default function Createestimate() {
         address2: '',
         post: '',
     });
+const handleEmailChange = (index, value) => {
+  const newEmails = [...credentials.emails];
+  newEmails[index] = value;
+  setCredentials({ ...credentials, emails: newEmails });
+};
+
+const addEmailField = () => {
+  setCredentials({ ...credentials, emails: [...credentials.emails, ''] });
+};
+
+const removeEmailField = (index) => {
+  if (credentials.emails.length > 1) {
+    const newEmails = credentials.emails.filter((_, i) => i !== index);
+    setCredentials({ ...credentials, emails: newEmails });
+  }
+};
 
     useEffect(() => {
         const fetchData = async () => {
@@ -390,32 +409,45 @@ export default function Createestimate() {
         const selectedCustomerId = event.value;
         setSelectedCustomerId(selectedCustomerId);
         const selectedCustomer = customers.find((customer) => customer._id === selectedCustomerId);
-
+        
+        console.log(selectedCustomer,"Selected Customer");
+        
         if (selectedCustomer) {
             setestimateData({
                 ...estimateData,
                 customername: selectedCustomer.name,
-                customeremail: selectedCustomer.email,
+                customerphone: selectedCustomer.number,
             });
 
-            setSelectedCustomerDetails({
-                name: selectedCustomer.name,
-                email: selectedCustomer.email
-            });
+           setSelectedCustomerDetails({
+  name: selectedCustomer.name,
+  email: selectedCustomer.emails?.[0] || '',
+  number: selectedCustomer.number
+});
+
+// Handle multiple emails
+if (selectedCustomer.emails?.length > 1) {
+  setEmailOptions(selectedCustomer.emails);
+  setShowEmailModal(true); // open modal
+} else {
+  setestimateData(prev => ({
+    ...prev,
+    customeremail: selectedCustomer.emails?.[0] || '',
+  }));
+}
             setIsCustomerSelected(true);
         }
 
         setSearchcustomerResults([...searchcustomerResults, event]);
     };
 
-    const handleNameChange = (e) => {
-        const selectedName = e.target.value;
-        setEditedName(selectedName);
-    
-        const customer = customers.find(c => c.name === selectedName);
-        if (customer) {
-            setSelectedCustomerId(customer._id);
-            setEditedEmail(customer.email); 
+    const handleNameChange = (event) => {
+        const selectedName = event.target.value;
+        const selectedCustomer = customers.find(customer => customer.name === selectedName);
+        if (selectedCustomer) {
+            setEditedName(selectedName);
+            setEditedEmail(selectedCustomer.email);
+            setEditedNumber(selectedCustomer.number);
         }
     };
 
@@ -437,11 +469,13 @@ export default function Createestimate() {
         const updatedCustomerDetails = {
             name: editedName,
             email: editedEmail,
+            number: editedNumber,
         };
 
         setSelectedCustomerDetails({
             name: editedName,
             email: editedEmail,
+            number: editedNumber
         });
     
         console.log(SelectedCustomerId, 'edited SelectedCustomerId');
@@ -564,6 +598,7 @@ export default function Createestimate() {
             const estimateItems = searchitemResults.map((item) => {
                 const selectedItem = items.find((i) => i._id === item.value);
                 const itemPrice = selectedItem?.price || 0;
+                const unit = selectedItem?.unit || 0;
                 const itemId = item.value;
                 const quantity = quantityMap[itemId] || 1;
                 const discount = discountMap[itemId] || 0;
@@ -574,6 +609,7 @@ export default function Createestimate() {
                     itemname: selectedItem.itemname,
                     itemquantity: quantity,
                     price: itemPrice,
+                    unit,
                     discount,
                     description: selectedItem.description,
                     amount: discountedAmount, // Add subtotal to each item
@@ -583,6 +619,13 @@ export default function Createestimate() {
             });
 
             const selectedCustomer = customers.find((customer) => customer._id === SelectedCustomerId);
+
+  // Validate customer fields
+  if (!selectedCustomerDetails.name || !selectedCustomerDetails.email) {
+    alert('Customer name, email, and phone are required. Please fill out these details.');
+    return;
+}
+
 
             // Summing up subtotal, total, and amount due for the entire estimate
             const subtotal = estimateItems.reduce((acc, curr) => acc + curr.amount, 0);
@@ -594,8 +637,9 @@ export default function Createestimate() {
 
             const data = {
                 userid: userid,
-                customername: selectedCustomer.name,
-                customeremail: selectedCustomer.email,
+                customername: selectedCustomerDetails.name,
+                customeremail: selectedCustomerDetails.email,
+                customerphone: selectedCustomerDetails.number,
                 estimate_id: estimateData.estimate_id,
                 EstimateNumber: estimateData.EstimateNumber,
                 purchaseorder: estimateData.purchaseorder,
@@ -613,7 +657,7 @@ export default function Createestimate() {
                 isAddSignature: isAddSignatureSwitchOn, 
                 isCustomerSign: isCustomerSignSwitchOn,
             };
-
+            console.log(data,"Data sdsdfsdsfsdf");
 
             // Sending estimate data to the backend API
             const response = await fetch('https://server-5pxf.onrender.com/api/savecreateestimate', {
@@ -634,6 +678,8 @@ export default function Createestimate() {
             else {
                 if (response.ok) {
                     const responseData = await response.json();
+                    console.log(responseData,"responseData");
+                    
                     if (responseData.success) {
                         const estimateid = responseData.estimate._id;
                         navigate('/userpanel/Estimatedetail', { state: { estimateid } });
@@ -654,6 +700,127 @@ export default function Createestimate() {
             console.error('Error creating estimate:', error);
         }
     };
+
+
+  const handleSubmit1 = async (e) => {
+    e.preventDefault();
+    try {
+        const userid = localStorage.getItem('userid'); // Assuming you have user ID stored in local storage
+        const authToken = localStorage.getItem('authToken');
+
+        // Ensure the selected customer exists
+        const selectedCustomer = customers.find((customer) => customer._id === SelectedCustomerId);
+
+        if (!selectedCustomer) {
+            alert('Please select a customer.');
+            return;
+        }
+
+        const { customername, customeremail, customerphone } = selectedCustomer;
+
+        // Validate customer fields
+        if (!customername || !customeremail || !customerphone) {
+            alert('Customer name, email, and phone are required. Please fill out these details.');
+            return;
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const estimateItems = searchitemResults.map((item) => {
+            const selectedItem = items.find((i) => i._id === item.value);
+            const itemPrice = selectedItem?.price || 0;
+            const unit = selectedItem?.unit || 0;
+            const itemId = item.value;
+            const quantity = quantityMap[itemId] || 1;
+            const discount = discountMap[itemId] || 0;
+            const discountedAmount = calculateDiscountedAmount(itemPrice, quantity, discount);
+
+            return {
+                itemId: itemId,
+                itemname: selectedItem.itemname,
+                itemquantity: quantity,
+                price: itemPrice,
+                unit,
+                discount,
+                description: selectedItem.description,
+                amount: discountedAmount, // Add subtotal to each item
+            };
+        });
+
+        // Summing up subtotal, total, and amount due for the entire estimate
+        const subtotal = estimateItems.reduce((acc, curr) => acc + curr.amount, 0);
+        const total = calculateTotal();
+        const amountdue = total;
+        const taxAmount = calculateTaxAmount(); // Calculate tax amount based on subtotal and tax percentage
+
+        const data = {
+            userid: userid,
+            customername: selectedCustomerDetails.name,
+            customeremail: selectedCustomerDetails.email,
+            customerphone: selectedCustomerDetails.number,
+            estimate_id: estimateData.estimate_id,
+            EstimateNumber: estimateData.EstimateNumber,
+            purchaseorder: estimateData.purchaseorder,
+            job: estimateData.job || 'No Job',
+            discountTotal: discountTotal || 0,
+            information: editorData,
+            date: estimateData.date,
+            items: estimateItems,
+            subtotal: subtotal,
+            total: total,
+            tax: taxAmount,
+            taxpercentage: signUpData.percentage,
+            amountdue: amountdue,
+            noteimageUrl: noteimageUrl,
+            isAddSignature: isAddSignatureSwitchOn, 
+            isCustomerSign: isCustomerSignSwitchOn,
+        };
+
+        console.log(data, "Data to send");
+
+        // Sending estimate data to the backend API
+        const response = await fetch('https://server-5pxf.onrender.com/api/savecreateestimate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': authToken,
+            },
+            body: JSON.stringify({ userid, estimateData: data }),
+        });
+
+        if (response.status === 401) {
+            const responseData = await response.json();
+            setAlertMessage(responseData.message);
+            setloading(false);
+            window.scrollTo(0, 0);
+            return; // Stop further execution
+        } else {
+            if (response.ok) {
+                const responseData = await response.json();
+                console.log(responseData, "responseData");
+
+                if (responseData.success) {
+                    const estimateid = responseData.estimate._id;
+                    navigate('/userpanel/Estimatedetail', { state: { estimateid } });
+                    console.log('Estimate saved successfully!');
+                } else {
+                    console.error('Failed to save the estimate.');
+                }
+            } else {
+                const responseData = await response.json();
+                setmessage(true);
+                setAlertShow(responseData.error);
+                console.error('Failed to save the estimate.');
+            }
+        }
+
+    } catch (error) {
+        console.error('Error creating estimate:', error);
+    }
+};
+
+  
+  
     const handleDiscountChange = (event) => {
         const value = event.target.value;
         // If the input is empty or NaN, set the value to 0
@@ -732,7 +899,7 @@ export default function Createestimate() {
             body: JSON.stringify({
                 userid: userid,
                 name: credentials.name,
-                email: credentials.email,
+                emails: credentials.emails,
                 information: credentials.information,
                 number: credentials.number,
                 city: city,
@@ -761,7 +928,7 @@ export default function Createestimate() {
             const json = await response.json();
             console.log(json);
 
-            if (json.Success) {
+            if (json.success) {
                 setCredentials({
                     name: '',
                     email: '',
@@ -780,13 +947,10 @@ export default function Createestimate() {
                 window.location.reload();
                 //   navigate('/userpanel/Customerlist');
             }
-
             else {
                 alert("This Customer Email already exist")
             }
         }
-
-
     };
 
     const onchangeaddcustomer = (event) => {
@@ -842,7 +1006,57 @@ export default function Createestimate() {
                                             </div>
                                         </div>
                                         <div className="row">
-                                            <div className="col-lg-9 col-12 order-2 order-lg-1"> 
+                                            
+                                        <div className="col-lg-3 col-12">
+                                                <div className='box1 rounded adminborder p-4 my-2 mx-0 mb-5'>
+                                                    <div className="form-check form-switch">
+                                                        <div>
+                                                            <label className="form-check-label" htmlFor="signatureSwitch">Signature</label>
+                                                            <input
+                                                                className="form-check-input"
+                                                                type="checkbox"
+                                                                role="switch"
+                                                                id="signatureSwitch"
+                                                                onChange={handleSignatureSwitch}
+                                                                checked={hasSignature}
+                                                            />
+                                                        </div>
+                                                        {hasSignature && (
+                                                            <>
+                                                                <div>
+                                                                    <label className="form-check-label" htmlFor="addSignatureSwitch">Add My Signature</label>
+                                                                    <input
+                                                                        className="form-check-input"
+                                                                        type="checkbox"
+                                                                        role="switch"
+                                                                        id="addSignatureSwitch"
+                                                                        checked={isAddSignatureSwitchOn}
+                                                                        onChange={handleAddSignatureSwitch}
+                                                                    />
+                                                                </div>
+                                                                <div>
+                                                                    <label className="form-check-label" htmlFor="customerSignSwitch">Customer to Sign</label>
+                                                                    <input
+                                                                        className="form-check-input"
+                                                                        type="checkbox"
+                                                                        role="switch"
+                                                                        id="customerSignSwitch"
+                                                                        checked={isCustomerSignSwitchOn}
+                                                                        onChange={handleCustomerSignSwitch}
+                                                                    />
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                {isSignatureModalOpen && (
+                                                    <SignatureModal
+                                                        onSave={saveSignature}
+                                                        onClose={() => setIsSignatureModalOpen(false)}
+                                                    />
+                                                )}
+                                            </div>
+                                            <div className="col-lg-12 col-12 order-2 order-lg-1"> 
                                                 <div className='box1 rounded adminborder p-4 m-2 mb-5'>
                                                     <div className='row me-2'>
                                                         <div className="col-md-6 col-lg-7 col-12">
@@ -855,6 +1069,7 @@ export default function Createestimate() {
                                                                         </li>
                                                                     </ul>
                                                                     <p>{selectedCustomerDetails.email}</p>
+                                                                    <p>{selectedCustomerDetails.number}</p>
                                                                 </div>
                                                             ) : (
                                                                 <div className="search-container forms">
@@ -978,8 +1193,8 @@ export default function Createestimate() {
                                                                     <tr>
                                                                         <th scope="col">ITEM</th>
                                                                         <th scope="col">QUANTITY</th>
+                                                                        <th scope="col">UNIT</th>
                                                                         <th scope="col">PRICE</th>
-                                                                        {/* <th scope="col">DISCOUNT</th> */}
                                                                         <th scope="col">AMOUNT</th>
                                                                     </tr>
                                                                 </thead>
@@ -1039,6 +1254,9 @@ export default function Createestimate() {
                                                                                     />
                                                                                 </td>
                                                                                 <td>
+                                                                                {selectedItem?.unit}
+                                                                                </td>
+                                                                                <td>
                                                                 
                                                                                     <input
                                                                                         type="text"
@@ -1051,6 +1269,7 @@ export default function Createestimate() {
                                                                                     />
 
                                                                                 </td>
+                                                                               
                                                                                 {/* <td className="text-center">
                                                                                     <p><CurrencySign />{discountTotal.toFixed(2)}</p>
                                                                                 </td> */}
@@ -1187,55 +1406,7 @@ export default function Createestimate() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-lg-3 col-12 order-1 order-lg-2">
-                                                <div className='box1 rounded adminborder p-4 my-2 mx-0 mb-5'>
-                                                    <div className="form-check form-switch">
-                                                        <div>
-                                                            <label className="form-check-label" htmlFor="signatureSwitch">Signature</label>
-                                                            <input
-                                                                className="form-check-input"
-                                                                type="checkbox"
-                                                                role="switch"
-                                                                id="signatureSwitch"
-                                                                onChange={handleSignatureSwitch}
-                                                                checked={hasSignature}
-                                                            />
-                                                        </div>
-                                                        {hasSignature && (
-                                                            <>
-                                                                <div>
-                                                                    <label className="form-check-label" htmlFor="addSignatureSwitch">Add My Signature</label>
-                                                                    <input
-                                                                        className="form-check-input"
-                                                                        type="checkbox"
-                                                                        role="switch"
-                                                                        id="addSignatureSwitch"
-                                                                        checked={isAddSignatureSwitchOn}
-                                                                        onChange={handleAddSignatureSwitch}
-                                                                    />
-                                                                </div>
-                                                                <div>
-                                                                    <label className="form-check-label" htmlFor="customerSignSwitch">Customer to Sign</label>
-                                                                    <input
-                                                                        className="form-check-input"
-                                                                        type="checkbox"
-                                                                        role="switch"
-                                                                        id="customerSignSwitch"
-                                                                        checked={isCustomerSignSwitchOn}
-                                                                        onChange={handleCustomerSignSwitch}
-                                                                    />
-                                                                </div>
-                                                            </>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                {isSignatureModalOpen && (
-                                                    <SignatureModal
-                                                        onSave={saveSignature}
-                                                        onClose={() => setIsSignatureModalOpen(false)}
-                                                    />
-                                                )}
-                                            </div>
+                                         
                                         </div>
 
                                     </form>
@@ -1276,218 +1447,243 @@ export default function Createestimate() {
                         </form>
 
                         {/* add customer */}
+ <form onSubmit={(e) => e.preventDefault()}>
+                <div className="modal fade" id="exampleModal1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-lg">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">Add Customer</h1>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="row">
 
-                        <form action="">
-                            <div className="modal fade" id="exampleModal1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div className="modal-dialog modal-lg">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h1 className="modal-title fs-5" id="exampleModalLabel">Add Customer</h1>
-                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div className="modal-body">
-                                            <div className="row">
-                                                <div className="col-12 col-sm-6 col-lg-4">
-                                                    <div className="mb-3">
-                                                        <label htmlFor="exampleInputtext1" className="form-label">
-                                                            Customer Name
-                                                        </label>
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            name="name"
-                                                            value={credentials.name}
-                                                            onChange={onchangeaddcustomer}
-                                                            placeholder="Customer Name"
-                                                            id="exampleInputtext1"
-                                                            required
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-12 col-sm-6 col-lg-4">
-                                                    <div className="mb-3">
-                                                        <label htmlFor="exampleInputEmail1" className="form-label">
-                                                            Contact Email
-                                                        </label>
-                                                        <input
-                                                            type="email"
-                                                            className="form-control"
-                                                            name="email"
-                                                            value={credentials.email}
-                                                            onChange={onchangeaddcustomer}
-                                                            placeholder="Contact Email"
-                                                            id="email"
-                                                            aria-describedby="emailHelp"
-                                                            required
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-12 col-sm-6 col-lg-4">
-                                                    <div className="mb-3">
-                                                        <label htmlFor="Number" className="form-label">
-                                                            Phone Number
-                                                        </label>
-                                                        <input
-                                                            type="text"
-                                                            name="number"
-                                                            className="form-control"
-                                                            onChange={onchangeaddcustomer}
-                                                            placeholder="Phone Number"
-                                                            id="phonenumber"
-                                                            required
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-12 col-sm-12 col-lg-12">
-                                                    <div className="mb-3">
-                                                        <label htmlFor="information" className="form-label">
-                                                            Additional Information
-                                                        </label>
-                                                        <textarea
-                                                            type="text"
-                                                            className="form-control"
-                                                            name="information"
-                                                            onChange={onchangeaddcustomer}
-                                                            placeholder="Information"
-                                                            id="information"
-
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-12 col-sm-6 col-lg-6">
-                                                    <div className="mb-3">
-                                                        <label htmlFor="Address1" className="form-label">
-                                                            Address 1
-                                                        </label>
-                                                        <input
-                                                            type="message"
-                                                            name="address1"
-                                                            onChange={onchangeaddcustomer}
-                                                            className="form-control"
-                                                            placeholder="Address 1"
-                                                            id="Address1"
-
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-12 col-sm-6 col-lg-6">
-                                                    <div className="mb-3">
-                                                        <label htmlFor="Address2" className="form-label">
-                                                            Address 2
-                                                        </label>
-                                                        <input
-                                                            type="message"
-                                                            name="address2"
-                                                            onChange={onchangeaddcustomer}
-                                                            className="form-control"
-                                                            placeholder="Address 2"
-                                                            id="Address2"
-
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-12 col-sm-6 col-lg-6">
-                                                    <div className="mb-3">
-                                                        <label htmlFor="Country" className="form-label">
-                                                            Country
-                                                        </label>
-                                                        <CountrySelect
-                                                            name="country"
-                                                            value={credentials.countryid}
-                                                            onChange={(val) => {
-                                                                console.log(val);
-                                                                setcountryid(val.id);
-                                                                setcountry(val.name);
-                                                                // setCredentials({ ...credentials, country: val.name })
-                                                                // setCredentials({ ...credentials, countryid: val.id })
-                                                                setCredentials({ ...credentials, countrydata: JSON.stringify(val) })
-
-                                                            }}
-                                                            valueType="short"
-                                                            class="form-control"
-                                                            placeHolder="Select Country"
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-12 col-sm-6 col-lg-6">
-                                                    <div className="mb-3">
-                                                        <label htmlFor="State" className="form-label">
-                                                            State
-                                                        </label>
-                                                        <StateSelect
-                                                            name="state"
-                                                            countryid={countryid} // Set the country selected in the CountryDropdown
-                                                            onChange={(val) => {
-                                                                console.log(val);
-                                                                setstateid(val.id);
-                                                                setstate(val.name);
-                                                                // setCredentials({ ...credentials, state: val.name })
-                                                                // setCredentials({ ...credentials, stateid: val.id })
-                                                                setCredentials({ ...credentials, statedata: JSON.stringify(val) })
-                                                            }}
-                                                            placeHolder="Select State"
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-12 col-sm-6 col-lg-6">
-                                                    <div className="mb-3">
-                                                        <label htmlFor="City" className="form-label">
-                                                            City
-                                                        </label>
-                                                        <CitySelect
-                                                            countryid={countryid}
-                                                            stateid={stateid}
-                                                            onChange={(val) => {
-                                                                console.log(val);
-                                                                setcityid(val.id);
-                                                                setcity(val.name);
-                                                                // setCredentials({ ...credentials, city: val.name })
-                                                                // setCredentials({ ...credentials, cityid: val.id })
-                                                                setCredentials({ ...credentials, citydata: JSON.stringify(val) })
-                                                            }}
-                                                            placeHolder="Select City"
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-12 col-sm-6 col-lg-6">
-                                                    <div className="mb-3">
-                                                        <label htmlFor="post" className="form-label">
-                                                            Post Code
-                                                        </label>
-                                                        <input
-                                                            type="text"
-                                                            name="post"
-                                                            onChange={onchangeaddcustomer}
-                                                            className="form-control"
-                                                            placeholder="Post Code"
-                                                            id="post"
-
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="modal-footer">
-                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={handleAddCustomer}>Add Customer</button>
-                                        </div>
+                                    {/* Customer Name */}
+                                    <div className="col-12 col-sm-6 col-lg-4 mb-3">
+                                        <label className="form-label">Customer Name</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            name="name"
+                                            value={credentials.name}
+                                            onChange={onchangeaddcustomer}
+                                            placeholder="Customer Name"
+                                            required
+                                        />
                                     </div>
+
+                                    {/* Emails */}
+                                    <div className="col-12 col-sm-6 col-lg-8 mb-3">
+                                        <label className="form-label">Contact Emails</label>
+                                        {credentials.emails.map((email, index) => (
+                                            <div className="input-group mb-2" key={index}>
+                                                <input
+                                                    type="email"
+                                                    className="form-control"
+                                                    value={email}
+                                                    onChange={(e) => handleEmailChange(index, e.target.value)}
+                                                    placeholder={`Contact Email #${index + 1}`}
+                                                    required
+                                                />
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-outline-danger"
+                                                    onClick={() => removeEmailField(index)}
+                                                    disabled={credentials.emails.length === 1}
+                                                >
+                                                    -
+                                                </button>
+                                                {index === credentials.emails.length - 1 && (
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-outline-primary"
+                                                        onClick={addEmailField}
+                                                    >
+                                                        +
+                                                    </button>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Phone Number */}
+                                    <div className="col-12 col-sm-6 col-lg-4 mb-3">
+                                        <label className="form-label">Phone Number</label>
+                                        <input
+                                            type="text"
+                                            name="number"
+                                            value={credentials.number}
+                                            onChange={onchangeaddcustomer}
+                                            className="form-control"
+                                            placeholder="Phone Number"
+                                        />
+                                    </div>
+
+                                    {/* Additional Information */}
+                                    <div className="col-12 mb-3">
+                                        <label className="form-label">Additional Information</label>
+                                        <textarea
+                                            name="information"
+                                            value={credentials.information}
+                                            onChange={onchangeaddcustomer}
+                                            className="form-control"
+                                            placeholder="Information"
+                                        />
+                                    </div>
+
+                                    {/* Address 1 & 2 */}
+                                    <div className="col-12 col-sm-6 col-lg-6 mb-3">
+                                        <label className="form-label">Address 1</label>
+                                        <input
+                                            type="text"
+                                            name="address1"
+                                            value={credentials.address1}
+                                            onChange={onchangeaddcustomer}
+                                            className="form-control"
+                                            placeholder="Address 1"
+                                        />
+                                    </div>
+
+                                    <div className="col-12 col-sm-6 col-lg-6 mb-3">
+                                        <label className="form-label">Address 2</label>
+                                        <input
+                                            type="text"
+                                            name="address2"
+                                            value={credentials.address2}
+                                            onChange={onchangeaddcustomer}
+                                            className="form-control"
+                                            placeholder="Address 2"
+                                        />
+                                    </div>
+
+                                    {/* Country */}
+                                    <div className="col-12 col-sm-6 col-lg-6 mb-3">
+                                        <label className="form-label">Country</label>
+                                        <CountrySelect
+                                            name="country"
+                                            value={credentials.countryid}
+                                            onChange={(val) => {
+                                                setcountryid(val.id);
+                                                setcountry(val.name);
+                                                setCredentials({ ...credentials, countrydata: JSON.stringify(val) });
+                                            }}
+                                            valueType="short"
+                                            className="form-control"
+                                            placeHolder="Select Country"
+                                        />
+                                    </div>
+
+                                    {/* State */}
+                                    <div className="col-12 col-sm-6 col-lg-6 mb-3">
+                                        <label className="form-label">State</label>
+                                        <StateSelect
+                                            name="state"
+                                            countryid={countryid}
+                                            onChange={(val) => {
+                                                setstateid(val.id);
+                                                setstate(val.name);
+                                                setCredentials({ ...credentials, statedata: JSON.stringify(val) });
+                                            }}
+                                            placeHolder="Select State"
+                                        />
+                                    </div>
+
+                                    {/* City */}
+                                    <div className="col-12 col-sm-6 col-lg-6 mb-3">
+                                        <label className="form-label">City</label>
+                                        <CitySelect
+                                            countryid={countryid}
+                                            stateid={stateid}
+                                            onChange={(val) => {
+                                                setcityid(val.id);
+                                                setcity(val.name);
+                                                setCredentials({ ...credentials, citydata: JSON.stringify(val) });
+                                            }}
+                                            placeHolder="Select City"
+                                        />
+                                    </div>
+
+                                    {/* Post Code */}
+                                    <div className="col-12 col-sm-6 col-lg-6 mb-3">
+                                        <label className="form-label">Post Code</label>
+                                        <input
+                                            type="text"
+                                            name="post"
+                                            value={credentials.post}
+                                            onChange={onchangeaddcustomer}
+                                            className="form-control"
+                                            placeholder="Post Code"
+                                        />
+                                    </div>
+
                                 </div>
                             </div>
-                        </form>
+
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={handleAddCustomer}
+                                    data-bs-dismiss="modal"
+                                >
+                                    Add Customer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
                     </div>
 
 
             }
+            {showEmailModal && (
+  <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
+    <div className="modal-dialog">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title">Select an Email for Estimate</h5>
+          <button
+            type="button"
+            className="btn-close"
+            onClick={() => setShowEmailModal(false)}
+          ></button>
+        </div>
+        <div className="modal-body">
+          <p>This customer has multiple emails. Please select one:</p>
+          {emailOptions.map((email, index) => (
+            <div className="form-check" key={index}>
+              <input
+                className="form-check-input"
+                type="radio"
+                name="selectedEmail"
+                id={`email-${index}`}
+                value={email}
+                onChange={() => {
+                  setestimateData(prev => ({
+                    ...prev,
+                    customeremail: email,
+                  }));
+
+                  setSelectedCustomerDetails(prev => ({
+                    ...prev,
+                    email: email,
+                  }));
+
+                  setShowEmailModal(false);
+                }}
+              />
+              <label className="form-check-label" htmlFor={`email-${index}`}>
+                {email}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+)}
         </div>
     )
 }
