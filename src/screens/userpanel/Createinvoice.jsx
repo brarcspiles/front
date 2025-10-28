@@ -164,7 +164,7 @@ export default function Createinvoice() {
         if (event.target.checked) {
             try {
                 const ownerId = localStorage.getItem('userid');
-                const response = await fetch(`https://server-5pxf.onrender.com/api/check-signature/${ownerId}`);
+                const response = await fetch(`https://server-three-mu-70.vercel.app/api/check-signature/${ownerId}`);
                 const data = await response.json();
                 setHasSignature(data.hasSignature);
 
@@ -202,7 +202,7 @@ export default function Createinvoice() {
             const ownerId = localStorage.getItem('userid');
             const email = localStorage.getItem('userEmail');
             const companyname = localStorage.getItem('companyname');
-            await fetch('https://server-5pxf.onrender.com/api/ownersignature', {
+            await fetch('https://server-three-mu-70.vercel.app/api/ownersignature', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -223,7 +223,7 @@ export default function Createinvoice() {
         try {
             const userid = localStorage.getItem('userid');
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-5pxf.onrender.com/api/lastinvoicenumber/${userid}`, {
+            const response = await fetch(`https://server-three-mu-70.vercel.app/api/lastinvoicenumber/${userid}`, {
                 headers: {
                     'Authorization': authToken,
                 }
@@ -260,7 +260,7 @@ export default function Createinvoice() {
         try {
             const userid = localStorage.getItem("userid");
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-5pxf.onrender.com/api/getsignupdata/${userid}`, {
+            const response = await fetch(`https://server-three-mu-70.vercel.app/api/getsignupdata/${userid}`, {
                 headers: {
                     'Authorization': authToken,
                 }
@@ -293,7 +293,7 @@ export default function Createinvoice() {
         try {
             const userid = localStorage.getItem("userid");
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-5pxf.onrender.com/api/customers/${userid}`, {
+            const response = await fetch(`https://server-three-mu-70.vercel.app/api/customers/${userid}`, {
                 headers: {
                     'Authorization': authToken,
                 }
@@ -324,7 +324,7 @@ export default function Createinvoice() {
         try {
             const userid = localStorage.getItem("userid");
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-5pxf.onrender.com/api/itemdata/${userid}`, {
+            const response = await fetch(`https://server-three-mu-70.vercel.app/api/itemdata/${userid}`, {
                 headers: {
                     'Authorization': authToken,
                 }
@@ -639,7 +639,7 @@ export default function Createinvoice() {
             console.log(data, "Invoice Data ====");
 
             // Sending invoice data to the backend API
-            const response = await fetch('https://server-5pxf.onrender.com/api/savecreateinvoice', {
+            const response = await fetch('https://server-three-mu-70.vercel.app/api/savecreateinvoice', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -777,7 +777,7 @@ export default function Createinvoice() {
         e.preventDefault();
         let userid = localStorage.getItem('userid');
         const authToken = localStorage.getItem('authToken');
-        const response = await fetch('https://server-5pxf.onrender.com/api/addcustomer', {
+        const response = await fetch('https://server-three-mu-70.vercel.app/api/addcustomer', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

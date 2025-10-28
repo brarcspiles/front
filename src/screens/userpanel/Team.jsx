@@ -39,7 +39,7 @@ export default function Team() {
         try {
             const userid = localStorage.getItem('userid');
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-5pxf.onrender.com/api/teammemberdata/${userid}`, {
+            const response = await fetch(`https://server-three-mu-70.vercel.app/api/teammemberdata/${userid}`, {
                 headers: {
                     Authorization: authToken,
                 },
@@ -72,7 +72,7 @@ export default function Team() {
     const handleDeleteClick = async (teamid) => {
         try {
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-5pxf.onrender.com/api/delteammember/${teamid}`, {
+            const response = await fetch(`https://server-three-mu-70.vercel.app/api/delteammember/${teamid}`, {
                 method: 'GET',
                 headers: {
                     Authorization: authToken,

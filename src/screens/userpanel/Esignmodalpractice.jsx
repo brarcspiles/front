@@ -12,7 +12,7 @@ export default function Esignmodalpractice() {
         if (event.target.checked) {
             try {
                 const ownerId = localStorage.getItem('userid');
-                const response = await fetch(`https://server-5pxf.onrender.com/api/check-signature/${ownerId}`);
+                const response = await fetch(`https://server-three-mu-70.vercel.app/api/check-signature/${ownerId}`);
                 const data = await response.json();
                 setHasSignature(data.hasSignature);
 
@@ -49,7 +49,7 @@ export default function Esignmodalpractice() {
         try {
             const ownerId = localStorage.getItem('userid');
             const email = localStorage.getItem('userEmail');
-            await fetch('https://server-5pxf.onrender.com/api/ownersignature', {
+            await fetch('https://server-three-mu-70.vercel.app/api/ownersignature', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

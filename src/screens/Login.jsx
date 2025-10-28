@@ -26,7 +26,7 @@ export default function Login() {
 
     try {
       const sanitizedEmail = credentials.email.toLowerCase().replace(/\s+/g, '');
-      const response = await fetch("https://server-5pxf.onrender.com/api/login", {
+      const response = await fetch("https://server-three-mu-70.vercel.app/api/login", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

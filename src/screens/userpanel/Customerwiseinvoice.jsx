@@ -33,7 +33,7 @@ function Customerwiseinvoice() {
     try {
       const authToken = localStorage.getItem('authToken');
     //   const customerEmail = localStorage.getItem('customerEmail');
-      const response = await fetch(`https://server-5pxf.onrender.com/api/customerwisedata/${customerEmail}`, {
+      const response = await fetch(`https://server-three-mu-70.vercel.app/api/customerwisedata/${customerEmail}`, {
         headers: {
           'Authorization': authToken,
         }
