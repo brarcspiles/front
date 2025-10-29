@@ -34,7 +34,7 @@ export default function Estimate() {
     try {
       const userid = localStorage.getItem("userid");
       const authToken = localStorage.getItem('authToken');
-      const response = await fetch(`https://server-three-mu-70.vercel.app/api/estimatedata/${userid}`, {
+      const response = await fetch(`https://server-chi-seven-94.vercel.app/api/estimatedata/${userid}`, {
         headers: {
           'Authorization': authToken,
         }
@@ -80,7 +80,7 @@ export default function Estimate() {
     console.log(estimateid);
     try {
       const authToken = localStorage.getItem('authToken');
-      const response = await fetch(`https://server-three-mu-70.vercel.app/api/converttoinvoice/${estimateid}`, {
+      const response = await fetch(`https://server-chi-seven-94.vercel.app/api/converttoinvoice/${estimateid}`, {
         method: 'POST',
         headers: {
           'Authorization': authToken,

@@ -6,7 +6,7 @@ export default function ForgotPassword() {
 
   const handleResetPassword = async () => {
     try {
-      const response = await fetch('https://server-three-mu-70.vercel.app/api/forgot-password', {
+      const response = await fetch('https://server-chi-seven-94.vercel.app/api/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

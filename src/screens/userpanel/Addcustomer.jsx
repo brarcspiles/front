@@ -67,7 +67,7 @@ export default function Addcustomer() {
     const authToken = localStorage.getItem('authToken');
 
     try {
-      const response = await fetch('https://server-three-mu-70.vercel.app/api/addcustomer', {
+      const response = await fetch('https://server-chi-seven-94.vercel.app/api/addcustomer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -32,7 +32,7 @@
         try {
         const userid = localStorage.getItem("userid");
         const authToken = localStorage.getItem('authToken');
-        const response = await fetch(`https://server-three-mu-70.vercel.app/api/getsignupdata/${userid}`, {
+        const response = await fetch(`https://server-chi-seven-94.vercel.app/api/getsignupdata/${userid}`, {
             headers: {
             'Authorization': authToken,
             }
@@ -88,7 +88,7 @@
             city: JSON.stringify(credentials.city)
         };
         console.log("updatedsignupdata:->", updatedsignupdata);
-        const response = await fetch(`https://server-three-mu-70.vercel.app/api/updatesignupdata/${userid}`, {
+        const response = await fetch(`https://server-chi-seven-94.vercel.app/api/updatesignupdata/${userid}`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

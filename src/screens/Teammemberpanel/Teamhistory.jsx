@@ -29,7 +29,7 @@ export default function Teamhistory() {
         try {
             const teamid = localStorage.getItem('userid');
             const authToken = localStorage.getItem('authToken');
-          const response = await fetch(`https://server-three-mu-70.vercel.app/api/userEntries/${teamid}`, {
+          const response = await fetch(`https://server-chi-seven-94.vercel.app/api/userEntries/${teamid}`, {
             headers: {
               'Authorization': authToken,
             }

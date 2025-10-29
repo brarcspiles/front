@@ -20,7 +20,7 @@ export default function ResetPassword() {
     }
 
     try {
-      const response = await fetch('https://server-three-mu-70.vercel.app/api/reset-password', {
+      const response = await fetch('https://server-chi-seven-94.vercel.app/api/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -109,7 +109,7 @@ export default function Editinvoice() {
     const fetchInvoiceData = async () => {
         try {
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-three-mu-70.vercel.app/api/geteditinvoicedata/${invoiceid}`, {
+            const response = await fetch(`https://server-chi-seven-94.vercel.app/api/geteditinvoicedata/${invoiceid}`, {
                 headers: {
                     'Authorization': authToken,
                 }
@@ -139,7 +139,7 @@ export default function Editinvoice() {
         try {
             const userid =  localStorage.getItem("userid");
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-three-mu-70.vercel.app/api/customers/${userid}`, {
+            const response = await fetch(`https://server-chi-seven-94.vercel.app/api/customers/${userid}`, {
                 headers: {
                   'Authorization': authToken,
                 }
@@ -189,7 +189,7 @@ export default function Editinvoice() {
         try {
             const userid =  localStorage.getItem("userid");
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-three-mu-70.vercel.app/api/itemdata/${userid}`, {
+            const response = await fetch(`https://server-chi-seven-94.vercel.app/api/itemdata/${userid}`, {
                 headers: {
                   'Authorization': authToken,
                 }
@@ -229,7 +229,7 @@ export default function Editinvoice() {
             };
     
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-three-mu-70.vercel.app/api/updateinvoicedata/${invoiceid}`, {
+            const response = await fetch(`https://server-chi-seven-94.vercel.app/api/updateinvoicedata/${invoiceid}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -374,7 +374,7 @@ export default function Editinvoice() {
             }
     
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-three-mu-70.vercel.app/api/delinvoiceitem/${invoiceData._id}/${itemId}`, {
+            const response = await fetch(`https://server-chi-seven-94.vercel.app/api/delinvoiceitem/${invoiceData._id}/${itemId}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': authToken,

@@ -36,7 +36,7 @@ useEffect(() => {
       const endOfMonth = new Date(currentYear, currentMonthIndex + 1, 0, 23, 59, 59);
       const authToken = localStorage.getItem('authToken');
   
-      const response = await fetch(`https://server-three-mu-70.vercel.app/api/userEntries/${teamid}`, {
+      const response = await fetch(`https://server-chi-seven-94.vercel.app/api/userEntries/${teamid}`, {
         headers: {
           'Authorization': authToken,
         }

@@ -34,7 +34,7 @@ export default function Addteam() {
     e.preventDefault();
     let userid = localStorage.getItem('userid');
     const authToken = localStorage.getItem('authToken');
-    const response = await fetch('https://server-three-mu-70.vercel.app/api/addteammember', {
+    const response = await fetch('https://server-chi-seven-94.vercel.app/api/addteammember', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

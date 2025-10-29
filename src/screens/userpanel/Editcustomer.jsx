@@ -52,7 +52,7 @@ const removeEmailField = (index) => {
     const fetchCustomerData = async () => {
         try {
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-three-mu-70.vercel.app/api/getcustomers/${customerId}`, {
+            const response = await fetch(`https://server-chi-seven-94.vercel.app/api/getcustomers/${customerId}`, {
                 headers: {
                     'Authorization': authToken,
                 }
@@ -88,7 +88,7 @@ const removeEmailField = (index) => {
                 ...customer
             };
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-three-mu-70.vercel.app/api/updatecostomerdata/${customerId}`, {
+            const response = await fetch(`https://server-chi-seven-94.vercel.app/api/updatecostomerdata/${customerId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

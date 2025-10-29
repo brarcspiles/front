@@ -167,7 +167,7 @@ const removeEmailField = (index) => {
         if (event.target.checked) {
             try {
                 const ownerId = localStorage.getItem('userid');
-                const response = await fetch(`https://server-three-mu-70.vercel.app/api/check-signature/${ownerId}`);
+                const response = await fetch(`https://server-chi-seven-94.vercel.app/api/check-signature/${ownerId}`);
                 const data = await response.json();
                 setHasSignature(data.hasSignature);
 
@@ -205,7 +205,7 @@ const removeEmailField = (index) => {
             const ownerId = localStorage.getItem('userid');
             const email = localStorage.getItem('userEmail');
             const companyname = localStorage.getItem('companyname');
-            await fetch('https://server-three-mu-70.vercel.app/api/ownersignature', {
+            await fetch('https://server-chi-seven-94.vercel.app/api/ownersignature', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -227,7 +227,7 @@ const removeEmailField = (index) => {
         try {
             const userid = localStorage.getItem('userid');
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-three-mu-70.vercel.app/api/lastEstimateNumber/${userid}`, {
+            const response = await fetch(`https://server-chi-seven-94.vercel.app/api/lastEstimateNumber/${userid}`, {
                 headers: {
                     'Authorization': authToken,
                 }
@@ -264,7 +264,7 @@ const removeEmailField = (index) => {
         try {
             const userid = localStorage.getItem("userid");
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-three-mu-70.vercel.app/api/customers/${userid}`, {
+            const response = await fetch(`https://server-chi-seven-94.vercel.app/api/customers/${userid}`, {
                 headers: {
                     'Authorization': authToken,
                 }
@@ -294,7 +294,7 @@ const removeEmailField = (index) => {
         try {
           const userid = localStorage.getItem("userid");
           const authToken = localStorage.getItem('authToken');
-          const response = await fetch(`https://server-three-mu-70.vercel.app/api/getsignupdata/${userid}`, {
+          const response = await fetch(`https://server-chi-seven-94.vercel.app/api/getsignupdata/${userid}`, {
             headers: {
               'Authorization': authToken,
             }
@@ -326,7 +326,7 @@ const removeEmailField = (index) => {
         try {
             const userid = localStorage.getItem("userid");
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-three-mu-70.vercel.app/api/itemdata/${userid}`, {
+            const response = await fetch(`https://server-chi-seven-94.vercel.app/api/itemdata/${userid}`, {
                 headers: {
                     'Authorization': authToken,
                 }
@@ -660,7 +660,7 @@ if (selectedCustomer.emails?.length > 1) {
             console.log(data,"Data sdsdfsdsfsdf");
 
             // Sending estimate data to the backend API
-            const response = await fetch('https://server-three-mu-70.vercel.app/api/savecreateestimate', {
+            const response = await fetch('https://server-chi-seven-94.vercel.app/api/savecreateestimate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -779,7 +779,7 @@ if (selectedCustomer.emails?.length > 1) {
         console.log(data, "Data to send");
 
         // Sending estimate data to the backend API
-        const response = await fetch('https://server-three-mu-70.vercel.app/api/savecreateestimate', {
+        const response = await fetch('https://server-chi-seven-94.vercel.app/api/savecreateestimate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -890,7 +890,7 @@ if (selectedCustomer.emails?.length > 1) {
         e.preventDefault();
         let userid = localStorage.getItem('userid');
         const authToken = localStorage.getItem('authToken');
-        const response = await fetch('https://server-three-mu-70.vercel.app/api/addcustomer', {
+        const response = await fetch('https://server-chi-seven-94.vercel.app/api/addcustomer', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -32,7 +32,7 @@ export default function Edititem() {
     const fetchitemData = async () => {
         try {
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-three-mu-70.vercel.app/api/getitems/${itemId}`, {
+            const response = await fetch(`https://server-chi-seven-94.vercel.app/api/getitems/${itemId}`, {
                 headers: {
                   'Authorization': authToken,
                 }
@@ -67,7 +67,7 @@ export default function Edititem() {
                 ...item
             };
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`https://server-three-mu-70.vercel.app/api/updateitemdata/${itemId}`, {
+            const response = await fetch(`https://server-chi-seven-94.vercel.app/api/updateitemdata/${itemId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

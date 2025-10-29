@@ -88,7 +88,7 @@ const ConformityReportView = () => {
                 console.log(`${key}:`, value);
             }
     
-            const response = await fetch('https://server-three-mu-70.vercel.app/api/sendConformityReportEmail', {
+            const response = await fetch('https://server-chi-seven-94.vercel.app/api/sendConformityReportEmail', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ const ConformityReportView = () => {
     useEffect(() => {
         const fetchReport = async () => {
             try {
-                const response = await fetch(`https://server-three-mu-70.vercel.app/api/conformityReport/${id}`);
+                const response = await fetch(`https://server-chi-seven-94.vercel.app/api/conformityReport/${id}`);
                 if (response.ok) {
                     const data = await response.json();
                     setReport(data);

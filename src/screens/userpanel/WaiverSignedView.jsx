@@ -199,7 +199,7 @@ const WaiverSignView = () => {
     try {
       // const userid = localStorage.getItem("userid");
       // const authToken = localStorage.getItem('authToken');
-      const response = await fetch(`https://server-three-mu-70.vercel.app/api/waiver/${waiverId}`, {
+      const response = await fetch(`https://server-chi-seven-94.vercel.app/api/waiver/${waiverId}`, {
         // headers: {
         //   'Authorization': authToken,
         // }
@@ -249,7 +249,7 @@ const WaiverSignView = () => {
     console.log(typeof waiverId, "waiverId");
 
     try {
-      const response = await fetch(`https://server-three-mu-70.vercel.app/api/waiver/${waiverId}`, {
+      const response = await fetch(`https://server-chi-seven-94.vercel.app/api/waiver/${waiverId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -279,7 +279,7 @@ const WaiverSignView = () => {
   
     try {
       // Update the existing waiver signature
-      const updateResponse = await fetch(`https://server-three-mu-70.vercel.app/api/addwaiversignature/${encodeURIComponent(waiverId)}`, {
+      const updateResponse = await fetch(`https://server-chi-seven-94.vercel.app/api/addwaiversignature/${encodeURIComponent(waiverId)}`, {
         method: 'POST',  // Use POST method as per your API route
         headers: {
           'Content-Type': 'application/json',
@@ -313,7 +313,7 @@ const WaiverSignView = () => {
   const handleSignatureClick = async () => {
     setIsSignatureModalOpen(true);
     try {
-        const updateResponse = await fetch(`https://server-three-mu-70.vercel.app/api/updatewaiversignature/${encodeURIComponent(waiverData.waiver._id)}`, {
+        const updateResponse = await fetch(`https://server-chi-seven-94.vercel.app/api/updatewaiversignature/${encodeURIComponent(waiverData.waiver._id)}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
