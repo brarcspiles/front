@@ -40,7 +40,7 @@ export default function WaiverRequest() {
         try {
             setIsButtonDisabled(true); // Disable the button to prevent multiple submissions
             
-            const response = await fetch('https://server-chi-seven-94.vercel.app/api/send-waiver-request', {
+            const response = await fetch('https://server-5pxf.onrender.com/api/send-waiver-request', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

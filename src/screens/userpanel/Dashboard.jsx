@@ -76,7 +76,7 @@ export default function Dashboard() {
     try {
       const authToken = localStorage.getItem('authToken');
       const userid = localStorage.getItem("userid");
-      const response = await fetch(`https://server-chi-seven-94.vercel.app/api/getsignupdata/${userid}`, {
+      const response = await fetch(`https://server-5pxf.onrender.com/api/getsignupdata/${userid}`, {
         headers: {
           'Authorization': authToken,
         }
@@ -104,7 +104,7 @@ export default function Dashboard() {
     try {
       const userid = localStorage.getItem("userid");
       const authToken = localStorage.getItem('authToken');
-      const response = await fetch(`https://server-chi-seven-94.vercel.app/api/invoicedata/${userid}`, {
+      const response = await fetch(`https://server-5pxf.onrender.com/api/invoicedata/${userid}`, {
         headers: {
           'Authorization': authToken,
         }
@@ -136,7 +136,7 @@ export default function Dashboard() {
     try {
       const userid = localStorage.getItem("userid");
       const authToken = localStorage.getItem('authToken');
-      const response = await fetch(`https://server-chi-seven-94.vercel.app/api/currentMonthReceivedAmount/${userid}`, {
+      const response = await fetch(`https://server-5pxf.onrender.com/api/currentMonthReceivedAmount/${userid}`, {
         headers: {
           'Authorization': authToken,
         }
@@ -163,7 +163,7 @@ export default function Dashboard() {
     try {
         const authToken = localStorage.getItem('authToken');
         const userId = localStorage.getItem('userid');
-        const response = await fetch(`https://server-chi-seven-94.vercel.app/api/totalPaymentReceived/${userId}`, {
+        const response = await fetch(`https://server-5pxf.onrender.com/api/totalPaymentReceived/${userId}`, {
             headers: {
                 Authorization: authToken,
             },
@@ -187,7 +187,7 @@ export default function Dashboard() {
   //   try {
   //     const authToken = localStorage.getItem('authToken');
   //     const userid = localStorage.getItem('userid');
-  //     const response = await fetch(`https://server-chi-seven-94.vercel.app/api/totalPaymentsReceived/${userid}`, {
+  //     const response = await fetch(`https://server-5pxf.onrender.com/api/totalPaymentsReceived/${userid}`, {
   //       headers: {
   //         Authorization: authToken,
   //       },
@@ -209,7 +209,7 @@ export default function Dashboard() {
     try {
       const authToken = localStorage.getItem('authToken');
       const userid = localStorage.getItem('userid');
-      const response = await fetch(`https://server-chi-seven-94.vercel.app/api/overdueInvoices/${userid}`, {
+      const response = await fetch(`https://server-5pxf.onrender.com/api/overdueInvoices/${userid}`, {
         headers: { 'Authorization': authToken },
       });
       if (response.status === 401) {
