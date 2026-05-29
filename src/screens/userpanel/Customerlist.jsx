@@ -58,7 +58,7 @@ const handleEntriesChange = (e) => {
     try {
       const userid = localStorage.getItem("userid");
       const authToken = localStorage.getItem('authToken');
-      const response = await fetch(`https://server-5pxf.onrender.com/api/customers/${userid}`, {
+      const response = await fetch(`http://localhost:3001/api/customers/${userid}`, {
         headers: {
           'Authorization': authToken,
         }
@@ -93,7 +93,7 @@ const handleEntriesChange = (e) => {
   const handleDeleteClick = async (customerId) => {
     try {
       const authToken = localStorage.getItem('authToken');
-      const response = await fetch(`https://server-5pxf.onrender.com/api/delcustomers/${customerId}`, {
+      const response = await fetch(`http://localhost:3001/api/delcustomers/${customerId}`, {
         method: 'GET',
         headers: {
           'Authorization': authToken,

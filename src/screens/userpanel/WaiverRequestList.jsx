@@ -22,7 +22,7 @@ const WaiverRequestList = () => {
 
       try {
         setLoading(true);
-        const response = await fetch(`https://server-5pxf.onrender.com/api/getAllWaivers?userId=${encodeURIComponent(userId)}`, {
+        const response = await fetch(`http://localhost:3001/api/getAllWaivers?userId=${encodeURIComponent(userId)}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ const WaiverRequestList = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this waiver?")) {
       try {
-        const response = await fetch(`https://server-5pxf.onrender.com/api/deleteWaiver?id=${id}`, {
+        const response = await fetch(`http://localhost:3001/api/deleteWaiver?id=${id}`, {
           method: 'DELETE',
         });
   

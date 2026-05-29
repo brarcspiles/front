@@ -32,7 +32,7 @@
         try {
         const userid = localStorage.getItem("userid");
         const authToken = localStorage.getItem('authToken');
-        const response = await fetch(`https://server-5pxf.onrender.com/api/getsignupdata/${userid}`, {
+        const response = await fetch(`http://localhost:3001/api/getsignupdata/${userid}`, {
             headers: {
             'Authorization': authToken,
             }
@@ -88,7 +88,7 @@
             city: JSON.stringify(credentials.city)
         };
         console.log("updatedsignupdata:->", updatedsignupdata);
-        const response = await fetch(`https://server-5pxf.onrender.com/api/updatesignupdata/${userid}`, {
+        const response = await fetch(`http://localhost:3001/api/updatesignupdata/${userid}`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

@@ -42,7 +42,7 @@ const WaiverSign = () => {
 
   const fetchWaiverData = async () => {
     try {
-      const response = await fetch(`https://server-5pxf.onrender.com/api/waiver/${waiverId}`);
+      const response = await fetch(`http://localhost:3001/api/waiver/${waiverId}`);
       if (response.status === 401) {
         const json = await response.json();
         setError(json.message);
@@ -101,7 +101,7 @@ const WaiverSign = () => {
     };
 
     try {
-      const response = await fetch(`https://server-5pxf.onrender.com/api/waiver/${waiverId}`, {
+      const response = await fetch(`http://localhost:3001/api/waiver/${waiverId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ const WaiverSign = () => {
 
   const handleSaveSignature = async (signatureData) => {
     try {
-      const updateResponse = await fetch(`https://server-5pxf.onrender.com/api/addwaiversignature/${encodeURIComponent(waiverId)}`, {
+      const updateResponse = await fetch(`http://localhost:3001/api/addwaiversignature/${encodeURIComponent(waiverId)}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -67,7 +67,7 @@ export default function Addcustomer() {
     const authToken = localStorage.getItem('authToken');
 
     try {
-      const response = await fetch('https://server-5pxf.onrender.com/api/addcustomer', {
+      const response = await fetch('http://localhost:3001/api/addcustomer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
