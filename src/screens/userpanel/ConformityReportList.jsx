@@ -15,7 +15,7 @@ const ConformityReportList = () => {
     useEffect(() => {
         const fetchReports = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/conformityReport');
+                const response = await fetch('https://server-5pxf.onrender.com/api/conformityReport');
                 if (response.ok) {
                     const data = await response.json();
                     setReports(data);

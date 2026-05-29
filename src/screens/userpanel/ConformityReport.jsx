@@ -40,7 +40,7 @@ const ConformityReportSubmission = () => {
         try {
             const userid = localStorage.getItem("userid");
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`http://localhost:3001/api/customers/${userid}`, {
+            const response = await fetch(`https://server-5pxf.onrender.com/api/customers/${userid}`, {
                 headers: {
                     'Authorization': authToken,
                 }
@@ -75,7 +75,7 @@ const ConformityReportSubmission = () => {
     const fetchInvoices = async (customerEmail) => {
         try {
             const authToken = localStorage.getItem('authToken');
-            const response = await fetch(`http://localhost:3001/api/customerwisedata/${customerEmail}`, {
+            const response = await fetch(`https://server-5pxf.onrender.com/api/customerwisedata/${customerEmail}`, {
                 headers: {
                     'Authorization': authToken,
                 }
@@ -183,7 +183,7 @@ const ConformityReportSubmission = () => {
 
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:3001/api/conformityReport', {
+            const response = await fetch('https://server-5pxf.onrender.com/api/conformityReport', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

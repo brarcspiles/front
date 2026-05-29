@@ -88,7 +88,7 @@ const ConformityReportView = () => {
                 console.log(`${key}:`, value);
             }
     
-            const response = await fetch('http://localhost:3001/api/sendConformityReportEmail', {
+            const response = await fetch('https://server-5pxf.onrender.com/api/sendConformityReportEmail', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ const ConformityReportView = () => {
     useEffect(() => {
         const fetchReport = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/api/conformityReport/${id}`);
+                const response = await fetch(`https://server-5pxf.onrender.com/api/conformityReport/${id}`);
                 if (response.ok) {
                     const data = await response.json();
                     setReport(data);

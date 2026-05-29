@@ -25,7 +25,7 @@ export default function TeamLocation() {
 
   useEffect(() => {
     if (teamid) {
-      fetch(`http://localhost:3001/api/getUserLocations/${teamid}`)
+      fetch(`https://server-5pxf.onrender.com/api/getUserLocations/${teamid}`)
         .then(res => res.json())
         .then(data => {
           const grouped = {};
