@@ -1142,6 +1142,8 @@ thead{
           currencyType: signupdata.CurrencyType,
           amountdue1: invoiceData.total - transactions.reduce((total, payment) => total + payment.paidamount, 0),
           pdfAttachment: contentAsPdf,
+          invoiceId: invoiceid,
+          replyEmail: signupdata.email || '',
         }),
       });
 
